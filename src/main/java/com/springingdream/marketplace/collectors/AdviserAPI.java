@@ -6,18 +6,23 @@ import java.util.*;
 
 public class AdviserAPI {
     public static List<Integer> getGeneralRecommendations(String host, Integer userId, Integer page, Integer size) {
-        final StringBuilder uri = new StringBuilder()
-                .append(host)
-                .append("/api/adviser/recommendations?userId=")
-                .append(userId)
-                .append("&page=")
-                .append(page)
-                .append("&size=")
-                .append(size)
-                .append("&useClusters=true");
 
         RestTemplate restTemplate = new RestTemplate();
-        ApiResponse<LinkedHashMap<String, Object>> response = restTemplate.getForObject(uri.toString(), ApiResponse.class);
-        return (List<Integer>)response.getBody().get("content");
+        String uri = host +
+                "api/adviser/personal/" +
+                userId;
+
+        List<Integer> response = restTemplate.getForObject(uri, List.class);
+        if (response != null) {
+            return response.size() > size ? response.subList(page * size, (page + 1) * size) : response;
+        } else {
+            System.out.println("Response from Adviser Service is null.");
+            return Collections.emptyList();
+        }
+
+    }
+
+    public static void rateProduct() {
+        //TODO
     }
 }
