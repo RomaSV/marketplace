@@ -9,7 +9,7 @@ ADD pom.xml $WORK_DIR
 RUN ["mvn", "verify", "clean", "--fail-never"]
 
 ADD . $WORK_DIR
-RUN ["mvn", "package"]
+RUN ["mvn", "package", "-Dmaven.test.skip=true", "-U"]
 
 FROM openjdk:11
 COPY --from=0 /app/target/marketplace.jar /app/marketplace.jar
