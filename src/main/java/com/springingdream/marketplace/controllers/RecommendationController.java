@@ -4,13 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springingdream.marketplace.collectors.AdviserAPI;
 import com.springingdream.marketplace.collectors.ProductsAPI;
+import com.springingdream.marketplace.collectors.requests.RateRequest;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,5 +45,11 @@ public class RecommendationController {
             products.add(product);
         }
         return products;
+    }
+
+    @PostMapping
+    @ApiOperation(value = "Add rating")
+    public void updateUser(@RequestBody RateRequest request) {
+        AdviserAPI.rateProduct(ADVISER_HOST, request);
     }
 }

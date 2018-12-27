@@ -1,5 +1,6 @@
 package com.springingdream.marketplace.collectors;
 
+import com.springingdream.marketplace.collectors.requests.RateRequest;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -22,7 +23,11 @@ public class AdviserAPI {
 
     }
 
-    public static void rateProduct() {
-        //TODO
+    public static void rateProduct(String host, RateRequest request) {
+        final String uri = host + "/api/adviser/update";
+
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(uri, request, String.class);
     }
 }
